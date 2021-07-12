@@ -48,4 +48,39 @@ public class DataTierConnection {
         }
         return null;
     }
+
+    public void register(String username, String password) {
+        SocketMessage socketMessage = new SocketMessage("register");
+        socketMessage.setStr1(username);
+        socketMessage.setStr2(password);
+        createSocket();
+        try {
+            output.writeObject(socketMessage);
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                socket.close();
+            } catch (IOException ee) {
+                System.out.println(ee);
+            }
+        }
+    }
+
+    public void updateUser(int id, String username, String password) {
+        SocketMessage socketMessage = new SocketMessage("updateUser");
+        socketMessage.setInt1(id);
+        socketMessage.setStr1(username);
+        socketMessage.setStr2(password);
+        createSocket();
+        try {
+            output.writeObject(socketMessage);
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                socket.close();
+            } catch (IOException ee) {
+                System.out.println(ee);
+            }
+        }
+    }
 }
