@@ -4,7 +4,7 @@ import domain.User;
 
 import java.sql.*;
 
-public class DatabaseAccess implements DatabaseAccessInterface{
+public class DatabaseAccess implements DatabaseAccessInterface {
     private final String url = "jdbc:postgresql://localhost:5432/postgres";
     private final String username = "postgres";
     private final String password = "98765";
@@ -50,12 +50,34 @@ public class DatabaseAccess implements DatabaseAccessInterface{
 
     @Override
     public User register(String username, String password) throws SQLException {
-        return null;
+        try {
+            connect();
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO users(username, password, securityLevel) VALUES(?,?,?)");
+            statement.setString(1, username);
+            statement.setString(2, password);
+            statement.setInt(3, 2);
+            statement.execute();
+            disconnect();
+        } catch (SQLException e) {
+            return null;
+        }
+        return login(username, password);
     }
 
     @Override
     public User updateUser(int id, String username, String password) throws SQLException {
-        return null;
+        try {
+            connect();
+            PreparedStatement statement = connection.prepareStatement("UPDATE users SET username = ?, password = ? WHERE id = ?;");
+            statement.setString(1, username);
+            statement.setString(2, password);
+            statement.setInt(3, id);
+            statement.executeUpdate();
+            disconnect();
+        } catch (SQLException e) {
+            return null;
+        }
+        return login(username, password);
     }
 }
 
