@@ -49,13 +49,20 @@ public class DataTierConnection {
         return null;
     }
 
-    public void register(String username, String password) {
+    public boolean register(String username, String password) {
         SocketMessage socketMessage = new SocketMessage("register");
         socketMessage.setStr1(username);
         socketMessage.setStr2(password);
         createSocket();
         try {
             output.writeObject(socketMessage);
+            User user = (User) input.readObject();
+            socket.close();
+            if (user == null) {
+                return false;
+            } else if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                return true;
+            }
         } catch (Exception e) {
             System.out.println(e);
             try {
@@ -64,9 +71,10 @@ public class DataTierConnection {
                 System.out.println(ee);
             }
         }
+        return false;
     }
 
-    public void updateUser(int id, String username, String password) {
+    public boolean updateUser(int id, String username, String password) {
         SocketMessage socketMessage = new SocketMessage("updateUser");
         socketMessage.setInt1(id);
         socketMessage.setStr1(username);
@@ -74,6 +82,13 @@ public class DataTierConnection {
         createSocket();
         try {
             output.writeObject(socketMessage);
+            User user = (User) input.readObject();
+            socket.close();
+            if (user == null) {
+                return false;
+            } else if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                return true;
+            }
         } catch (Exception e) {
             System.out.println(e);
             try {
@@ -82,5 +97,6 @@ public class DataTierConnection {
                 System.out.println(ee);
             }
         }
+        return false;
     }
 }

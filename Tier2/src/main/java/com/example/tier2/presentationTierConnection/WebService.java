@@ -15,7 +15,7 @@ public class WebService {
     @GetMapping("/user")
     public User login(@RequestParam String username, @RequestParam String password) { return dataTierConnection.login(username,password); }
     @PostMapping("/user")
-    public void register(@RequestParam String username, @RequestParam String password) { dataTierConnection.register(username,password); }
+    public boolean register(@RequestParam String username, @RequestParam String password) { return dataTierConnection.register(username,password); }
     @PutMapping("/user")
-    public void updateUser(@RequestParam int id, @RequestParam String username, @RequestParam String password) { dataTierConnection.updateUser(id, username,password); }
+    public boolean updateUser(@RequestParam int id, @RequestParam String username, @RequestParam String password) { return dataTierConnection.updateUser(id, username,password); }
 }

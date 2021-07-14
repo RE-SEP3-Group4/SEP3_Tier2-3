@@ -31,6 +31,12 @@ public class LogicTierConnection implements Runnable {
                 case "login":
                     output.writeObject(databaseAccess.login(message.getStr1(), message.getStr2()));
                     break;
+                case "register":
+                    output.writeObject(databaseAccess.register(message.getStr1(), message.getStr2()));
+                    break;
+                case "updateUser":
+                    output.writeObject(databaseAccess.updateUser(message.getInt1(), message.getStr1(), message.getStr2()));
+                    break;
                 default:
                     System.out.println("Error!");
             }

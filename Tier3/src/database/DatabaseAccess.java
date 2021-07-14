@@ -47,5 +47,15 @@ public class DatabaseAccess implements DatabaseAccessInterface{
         }
         return null;
     }
+
+    @Override
+    public User register(String username, String password) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public User updateUser(int id, String username, String password) throws SQLException {
+        return null;
+    }
 }
 
