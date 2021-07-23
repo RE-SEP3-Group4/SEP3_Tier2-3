@@ -89,7 +89,7 @@ public class DatabaseAccess implements DatabaseAccessInterface {
     }
 
     @Override
-    public List<Reservation> createReservation(Reservation reservation) throws SQLException {
+    public List<Reservation> createReservation(int userID, int date) throws SQLException {
         return null;
     }
 
@@ -99,7 +99,7 @@ public class DatabaseAccess implements DatabaseAccessInterface {
     }
 
     @Override
-    public List<Payment> createPayment(Payment payment) throws SQLException {
+    public List<Payment> createPayment(int userID, int date, int period) throws SQLException {
         return null;
     }
 }

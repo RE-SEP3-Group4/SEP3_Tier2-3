@@ -17,8 +17,8 @@ public interface DatabaseAccessInterface {
     User updateUser(int id, String username, String password) throws SQLException;
 
     List<Reservation> getReservations(int userID) throws SQLException;
-    List<Reservation> createReservation(Reservation reservation) throws SQLException;
+    List<Reservation> createReservation(int userID, int date) throws SQLException;
 
     List<Payment> getPayments(int userID) throws SQLException;
-    List<Payment> createPayment(Payment payment) throws SQLException;
+    List<Payment> createPayment(int userID, int date, int period) throws SQLException;
 }
