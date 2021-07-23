@@ -8,7 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class DataTierConnection {
+public class UserDataTierConnection {
     private final String HOST = "localhost";
     private final int PORT = 3000;
 
@@ -16,7 +16,7 @@ public class DataTierConnection {
     private ObjectInputStream input = null;
     private ObjectOutputStream output = null;
 
-    public DataTierConnection() {}
+    public UserDataTierConnection() {}
 
     private void createSocket() {
         try {
