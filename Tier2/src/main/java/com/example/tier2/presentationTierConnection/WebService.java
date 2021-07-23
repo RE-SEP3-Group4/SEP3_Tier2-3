@@ -8,6 +8,8 @@ import domain.Reservation;
 import domain.User;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class WebService {
     private UserDataTierConnection userDataTierConnection;
@@ -30,13 +32,13 @@ public class WebService {
 
     // Methods related to the Reservation class.
     @GetMapping("/reservation")
-    public Reservation getReservations(@RequestParam int userID) { return reservationDataTierConnection.getReservations(userID); }
+    public List<Reservation> getReservations(@RequestParam int userID) { return reservationDataTierConnection.getReservations(userID); }
     @PostMapping("/reservation")
     public boolean createReservation(@RequestBody Reservation reservation) { return reservationDataTierConnection.createReservation(reservation.getUserID(), reservation.getDate()); }
 
     // Methods related to the Payment class.
     @GetMapping("/payment")
-    public Payment getPayments(@RequestParam int userID) { return paymentDataTierConnection.getPayments(userID); }
+    public List<Payment> getPayments(@RequestParam int userID) { return paymentDataTierConnection.getPayments(userID); }
     @PostMapping("/payment")
     public boolean createPayment(@RequestBody Payment payment) { return paymentDataTierConnection.createPayment(payment.getUserID(), payment.getDate(), payment.getPeriod()); }
 }

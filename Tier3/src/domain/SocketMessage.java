@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class SocketMessage implements Serializable {
     private User user;
     private String cmd, str1, str2;
-    private int int1, int2;
+    private int int1, int2, int3;
 
     public SocketMessage(String cmd) { this.cmd = cmd; }
 
@@ -48,4 +48,8 @@ public class SocketMessage implements Serializable {
     public int getInt2() { return int2; }
 
     public void setInt2(int int2) { this.int2 = int2; }
+
+    public int getInt3() { return int3; }
+
+    public void setInt3(int int3) { this.int3 = int3; }
 }

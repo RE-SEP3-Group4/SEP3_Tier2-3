@@ -1,15 +1,14 @@
 package com.example.tier2.dataTierConnection;
 
 import domain.Payment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import domain.Reservation;
+import domain.SocketMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 
 public class PaymentDataTierConnection {
     private final String HOST = "localhost";
@@ -31,7 +30,49 @@ public class PaymentDataTierConnection {
         }
     }
 
-    public Payment getPayments(int userID) { return null; }
+    public List<Payment> getPayments(int userID) {
+        SocketMessage socketMessage = new SocketMessage("getPayments");
+        socketMessage.setInt1(userID);
+        createSocket();
+        try {
+            output.writeObject(socketMessage);
+            List<Payment> payments = (List<Payment>) input.readObject();
+            socket.close();
+            return payments;
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                socket.close();
+            } catch (IOException ee) {
+                System.out.println(ee);
+            }
+        }
+        return null;
+    }
 
-    public boolean createPayment(int userID, int date, int period) { return false; }
+    public boolean createPayment(int userID, int date, int period) {
+        SocketMessage socketMessage = new SocketMessage("createPayment");
+        socketMessage.setInt1(userID);
+        socketMessage.setInt2(date);
+        socketMessage.setInt3(period);
+        createSocket();
+        try {
+            output.writeObject(socketMessage);
+            List<Payment> payments = (List<Payment>) input.readObject();
+            socket.close();
+            if (payments == null) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                socket.close();
+            } catch (IOException ee) {
+                System.out.println(ee);
+            }
+        }
+        return false;
+    }
 }

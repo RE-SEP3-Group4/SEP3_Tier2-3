@@ -1,8 +1,11 @@
 package database;
 
+import domain.Payment;
+import domain.Reservation;
 import domain.User;
 
 import java.sql.*;
+import java.util.List;
 
 public class DatabaseAccess implements DatabaseAccessInterface {
     private final String url = "jdbc:postgresql://localhost:5432/postgres";
@@ -78,6 +81,26 @@ public class DatabaseAccess implements DatabaseAccessInterface {
             return null;
         }
         return login(username, password);
+    }
+
+    @Override
+    public List<Reservation> getReservations(int userID) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public List<Reservation> createReservation(Reservation reservation) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public List<Payment> getPayments(int userID) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public List<Payment> createPayment(Payment payment) throws SQLException {
+        return null;
     }
 }
 
