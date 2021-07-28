@@ -38,17 +38,29 @@ public class LogicTierConnection implements Runnable {
                 case "updateUser":
                     output.writeObject(databaseAccess.updateUser(msg.getInt1(), msg.getStr1(), msg.getStr2()));
                     break;
+                case "deleteUser":
+                    //Write the delete user method
+                    break;
+                case "getAllUsers":
+                    //Write the get all user method
+                    break;
                 case "getReservations":
                     output.writeObject(databaseAccess.getReservations(msg.getInt1()));
                     break;
                 case "createReservation":
                     output.writeObject(databaseAccess.createReservation(msg.getInt1(), msg.getInt2()));
                     break;
+                case "deleteReservation":
+                    //Write the delete reservation method
+                    break;
                 case "getPayments":
                     output.writeObject(databaseAccess.getPayments(msg.getInt1()));
                     break;
                 case "createPayment":
                     output.writeObject(databaseAccess.createPayment(msg.getInt1(), msg.getInt2(), msg.getInt3()));
+                    break;
+                case "deletePayment":
+                    //Write the delete payment method
                     break;
                 default:
                     System.out.println("Wrong command imputed!");

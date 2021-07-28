@@ -73,4 +73,23 @@ public class ReservationDataTierConnection {
         }
         return false;
     }
+
+    public boolean deleteReservation(Reservation reservation) {
+        SocketMessage socketMessage = new SocketMessage("deleteReservation");
+        socketMessage.setReservation(reservation);
+        createSocket();
+        try {
+            output.writeObject(socketMessage);
+            socket.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                socket.close();
+            } catch (IOException ee) {
+                System.out.println(ee);
+            }
+        }
+        return false;
+    }
 }

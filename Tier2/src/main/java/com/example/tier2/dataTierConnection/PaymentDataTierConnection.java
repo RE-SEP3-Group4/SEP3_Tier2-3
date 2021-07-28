@@ -75,4 +75,23 @@ public class PaymentDataTierConnection {
         }
         return false;
     }
+
+    public boolean deletePayment(Payment payment) {
+        SocketMessage socketMessage = new SocketMessage("deletePayment");
+        socketMessage.setPayment(payment);
+        createSocket();
+        try {
+            output.writeObject(socketMessage);
+            socket.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                socket.close();
+            } catch (IOException ee) {
+                System.out.println(ee);
+            }
+        }
+        return false;
+    }
 }

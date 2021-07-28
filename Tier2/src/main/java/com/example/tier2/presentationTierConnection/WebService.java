@@ -29,16 +29,24 @@ public class WebService {
     public boolean register(@RequestBody User user) { return userDataTierConnection.register(user.getUsername(), user.getPassword()); }
     @PutMapping("/user")
     public boolean updateUser(@RequestParam int id, @RequestBody User user) { return userDataTierConnection.updateUser(id, user.getUsername(), user.getPassword()); }
+    @DeleteMapping("/user")
+    public boolean deleteUser(@RequestParam int id) { return userDataTierConnection.deleteUser(id); }
+    @GetMapping("/users")
+    public List<User> getAllUsers() { return userDataTierConnection.getAllUsers(); }
 
     // Methods related to the Reservation class.
     @GetMapping("/reservation")
     public List<Reservation> getReservations(@RequestParam int userID) { return reservationDataTierConnection.getReservations(userID); }
     @PostMapping("/reservation")
     public boolean createReservation(@RequestBody Reservation reservation) { return reservationDataTierConnection.createReservation(reservation.getUserID(), reservation.getDate()); }
+    @PutMapping("/reservation")
+    public boolean deleteReservation(@RequestBody Reservation reservation) { return reservationDataTierConnection.deleteReservation(reservation); }
 
     // Methods related to the Payment class.
     @GetMapping("/payment")
     public List<Payment> getPayments(@RequestParam int userID) { return paymentDataTierConnection.getPayments(userID); }
     @PostMapping("/payment")
     public boolean createPayment(@RequestBody Payment payment) { return paymentDataTierConnection.createPayment(payment.getUserID(), payment.getDate(), payment.getPeriod()); }
+    @PutMapping("/payment")
+    public boolean deletePayment(@RequestBody Payment payment) { return paymentDataTierConnection.deletePayment(payment); }
 }

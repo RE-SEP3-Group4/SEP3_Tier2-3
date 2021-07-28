@@ -2,11 +2,13 @@ package com.example.tier2.dataTierConnection;
 
 import domain.SocketMessage;
 import domain.User;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 
 public class UserDataTierConnection {
     private final String HOST = "localhost";
@@ -98,5 +100,43 @@ public class UserDataTierConnection {
             }
         }
         return false;
+    }
+
+    public boolean deleteUser(int id) {
+        SocketMessage socketMessage = new SocketMessage("deleteUser");
+        socketMessage.setInt1(id);
+        createSocket();
+        try {
+            output.writeObject(socketMessage);
+            socket.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                socket.close();
+            } catch (IOException ee) {
+                System.out.println(ee);
+            }
+        }
+        return false;
+    }
+
+    public List<User> getAllUsers() {
+        SocketMessage socketMessage = new SocketMessage("getAllUsers");
+        createSocket();
+        try {
+            output.writeObject(socketMessage);
+            List<User> users = (List<User>) input.readObject();
+            socket.close();
+            return users;
+        } catch (Exception e) {
+            System.out.println(e);
+            try {
+                socket.close();
+            } catch (IOException ee) {
+                System.out.println(ee);
+            }
+        }
+        return null;
     }
 }
