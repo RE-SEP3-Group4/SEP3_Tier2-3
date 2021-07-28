@@ -5,6 +5,7 @@ import domain.Reservation;
 import domain.User;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseAccess implements DatabaseAccessInterface {
@@ -85,21 +86,76 @@ public class DatabaseAccess implements DatabaseAccessInterface {
 
     @Override
     public List<Reservation> getReservations(int userID) throws SQLException {
+        List<Reservation> reservations = new ArrayList<>();
+        try {
+            connect();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM reservations WHERE userid = ?");
+            statement.setInt(1, userID);
+            ResultSet resultSet = statement.executeQuery();
+            disconnect();
+            while (resultSet.next()) {
+                int uID = resultSet.getInt(1);
+                int date = resultSet.getInt(2);
+                reservations.add(new Reservation(uID, date));
+            }
+            return reservations;
+        } catch (SQLException e) {
+            System.out.println("There was an error getting the reservations!" + e);
+        }
         return null;
     }
 
     @Override
     public List<Reservation> createReservation(int userID, int date) throws SQLException {
+        try {
+            connect();
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO reservation(userid, date) VALUES(?,?)");
+            statement.setInt(1, userID);
+            statement.setInt(2, date);
+            statement.execute();
+            disconnect();
+            return getReservations(userID);
+        } catch (SQLException e) {
+            System.out.println("There was an error creating the reservation!" + e);
+        }
         return null;
     }
 
     @Override
     public List<Payment> getPayments(int userID) throws SQLException {
+        List<Payment> payments = new ArrayList<>();
+        try {
+            connect();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM payments WHERE userid = ?");
+            statement.setInt(1, userID);
+            ResultSet resultSet = statement.executeQuery();
+            disconnect();
+            while (resultSet.next()) {
+                int uID = resultSet.getInt(1);
+                int date = resultSet.getInt(2);
+                int period = resultSet.getInt(3);
+                payments.add(new Payment(uID, date, period));
+            }
+            return payments;
+        } catch (SQLException e) {
+            System.out.println("There was an error getting the payments!" + e);
+        }
         return null;
     }
 
     @Override
     public List<Payment> createPayment(int userID, int date, int period) throws SQLException {
+        try {
+            connect();
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO payments(userid, date, period) VALUES(?,?,?)");
+            statement.setInt(1, userID);
+            statement.setInt(2, date);
+            statement.execute();
+            disconnect();
+            return getPayments(userID);
+        } catch (SQLException e) {
+            System.out.println("There was an error creating the payment!" + e);
+        }
         return null;
     }
 }

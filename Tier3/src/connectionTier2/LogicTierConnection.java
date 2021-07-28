@@ -21,32 +21,37 @@ public class LogicTierConnection implements Runnable {
     public void setSocket(Socket socket) throws IOException {
         output = new ObjectOutputStream(socket.getOutputStream());
         input = new ObjectInputStream(socket.getInputStream());
+        databaseAccess = new DatabaseAccess();
     }
 
     @Override
     public void run() {
         try {
-            SocketMessage message = (SocketMessage) input.readObject();
-            switch (message.getCmd()) {
+            SocketMessage msg = (SocketMessage) input.readObject();
+            switch (msg.getCmd()) {
                 case "login":
-                    output.writeObject(databaseAccess.login(message.getStr1(), message.getStr2()));
+                    output.writeObject(databaseAccess.login(msg.getStr1(), msg.getStr2()));
                     break;
                 case "register":
-                    output.writeObject(databaseAccess.register(message.getStr1(), message.getStr2()));
+                    output.writeObject(databaseAccess.register(msg.getStr1(), msg.getStr2()));
                     break;
                 case "updateUser":
-                    output.writeObject(databaseAccess.updateUser(message.getInt1(), message.getStr1(), message.getStr2()));
+                    output.writeObject(databaseAccess.updateUser(msg.getInt1(), msg.getStr1(), msg.getStr2()));
                     break;
                 case "getReservations":
+                    output.writeObject(databaseAccess.getReservations(msg.getInt1()));
                     break;
                 case "createReservation":
+                    output.writeObject(databaseAccess.createReservation(msg.getInt1(), msg.getInt2()));
                     break;
                 case "getPayments":
+                    output.writeObject(databaseAccess.getPayments(msg.getInt1()));
                     break;
                 case "createPayment":
+                    output.writeObject(databaseAccess.createPayment(msg.getInt1(), msg.getInt2(), msg.getInt3()));
                     break;
                 default:
-                    System.out.println("Error!");
+                    System.out.println("Wrong command imputed!");
             }
         } catch (Exception e) {
             System.out.println(e);

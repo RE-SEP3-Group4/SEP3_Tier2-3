@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS payments
 -- userID is the id of the user.
 -- date is the date when the user is coming.
 
-CREATE TABLE IF NOT EXISTS reservation
+CREATE TABLE IF NOT EXISTS reservations
 (
     userID INTEGER,
     date   INTEGER,
