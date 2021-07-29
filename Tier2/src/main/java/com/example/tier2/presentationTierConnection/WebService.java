@@ -40,7 +40,7 @@ public class WebService {
     @PostMapping("/reservation")
     public boolean createReservation(@RequestBody Reservation reservation) { return reservationDataTierConnection.createReservation(reservation.getUserID(), reservation.getDate(), reservation.getHour()); }
     @PutMapping("/reservation")
-    public boolean deleteReservation(@RequestBody Reservation reservation) { return reservationDataTierConnection.deleteReservation(reservation); }
+    public boolean deleteReservation(@RequestParam int userID, @RequestParam String date, @RequestParam String hour) { return reservationDataTierConnection.deleteReservation(new Reservation(userID, date, hour)); }
 
     // Methods related to the Payment class.
     @GetMapping("/payment")
@@ -48,5 +48,5 @@ public class WebService {
     @PostMapping("/payment")
     public boolean createPayment(@RequestBody Payment payment) { return paymentDataTierConnection.createPayment(payment.getUserID(), payment.getStartDate(), payment.getEndDate()); }
     @PutMapping("/payment")
-    public boolean deletePayment(@RequestBody Payment payment) { return paymentDataTierConnection.deletePayment(payment); }
+    public boolean deletePayment(@RequestParam int userID, @RequestParam String startDate, @RequestParam String endDate) { return paymentDataTierConnection.deletePayment(new Payment(userID, startDate, endDate)); }
 }

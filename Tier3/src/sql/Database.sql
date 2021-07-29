@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS reservations
 (
     userID INTEGER,
     date   VARCHAR(8),
-    hour   INTEGER,
+    hour   VARCHAR(4),
     FOREIGN KEY (userID) REFERENCES users (id),
     PRIMARY KEY (userID, date)
 );
