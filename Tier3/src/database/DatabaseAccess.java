@@ -119,7 +119,7 @@ public class DatabaseAccess implements DatabaseAccessInterface {
     public List<Reservation> createReservation(int userID, int date) throws SQLException {
         try {
             connect();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO reservation(userid, date) VALUES(?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO reservations(userid, date) VALUES(?,?)");
             statement.setInt(1, userID);
             statement.setInt(2, date);
             statement.execute();

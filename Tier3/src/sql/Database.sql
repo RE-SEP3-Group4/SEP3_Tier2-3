@@ -6,10 +6,10 @@
 
 CREATE TABLE IF NOT EXISTS users
 (
-    id                    SERIAL,
-    username              VARCHAR(15),
-    password              VARCHAR(15),
-    securityLevel         INTEGER,
+    id            SERIAL,
+    username      VARCHAR(15),
+    password      VARCHAR(15),
+    securityLevel INTEGER,
     PRIMARY KEY (id)
 );
 
@@ -20,11 +20,11 @@ CREATE TABLE IF NOT EXISTS users
 
 CREATE TABLE IF NOT EXISTS payments
 (
-    userID INTEGER,
-    date   INTEGER,
-    period INTEGER,
-    FOREIGN KEY (userID) REFERENCES users(id),
-    PRIMARY KEY (userID, date)
+    userID    INTEGER,
+    startDate DATE,
+    endDate   DATE,
+    FOREIGN KEY (userID) REFERENCES users (id),
+    PRIMARY KEY (userID, startDate, endDate)
 );
 
 -- This table stores the reservation to the gym --
@@ -34,7 +34,14 @@ CREATE TABLE IF NOT EXISTS payments
 CREATE TABLE IF NOT EXISTS reservations
 (
     userID INTEGER,
-    date   INTEGER,
-    FOREIGN KEY (userID) REFERENCES users(id),
+    date   timestamp,
+    FOREIGN KEY (userID) REFERENCES users (id),
     PRIMARY KEY (userID, date)
 );
+
+INSERT INTO users(username, password, securityLevel) VALUES ('admin', 'admin', 2);
+INSERT INTO users(username, password, securityLevel) VALUES ('John', '1234', 1);
+
+INSERT INTO payments(userID, startDate, endDate) VALUES (2, make_date(2021, 7, 29), make_date(2021, 8, 29));
+
+INSERT INTO reservations(userid, date) VALUES (2, TO_TIMESTAMP('28 7 2021 21', 'MM-DD-YYYY HH24'));
