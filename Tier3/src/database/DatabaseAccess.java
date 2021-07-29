@@ -85,6 +85,16 @@ public class DatabaseAccess implements DatabaseAccessInterface {
     }
 
     @Override
+    public boolean deleteUser(int id) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public List<User> getAllUsers() throws SQLException {
+        return null;
+    }
+
+    @Override
     public List<Reservation> getReservations(int userID) throws SQLException {
         List<Reservation> reservations = new ArrayList<>();
         try {
@@ -119,6 +129,11 @@ public class DatabaseAccess implements DatabaseAccessInterface {
             System.out.println("There was an error creating the reservation!" + e);
         }
         return null;
+    }
+
+    @Override
+    public boolean deleteReservation(Reservation reservation) throws SQLException {
+        return false;
     }
 
     @Override
@@ -157,6 +172,11 @@ public class DatabaseAccess implements DatabaseAccessInterface {
             System.out.println("There was an error creating the payment!" + e);
         }
         return null;
+    }
+
+    @Override
+    public boolean deletePayment(Payment payment) throws SQLException {
+        return false;
     }
 }
 

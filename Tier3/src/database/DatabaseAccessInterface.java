@@ -15,10 +15,14 @@ public interface DatabaseAccessInterface {
     User login(String username, String password) throws SQLException;
     User register(String username, String password) throws SQLException;
     User updateUser(int id, String username, String password) throws SQLException;
+    boolean deleteUser(int id) throws SQLException;
+    List<User> getAllUsers() throws SQLException;
 
     List<Reservation> getReservations(int userID) throws SQLException;
     List<Reservation> createReservation(int userID, int date) throws SQLException;
+    boolean deleteReservation(Reservation reservation) throws SQLException;
 
     List<Payment> getPayments(int userID) throws SQLException;
     List<Payment> createPayment(int userID, int date, int period) throws SQLException;
+    boolean deletePayment(Payment payment) throws SQLException;
 }

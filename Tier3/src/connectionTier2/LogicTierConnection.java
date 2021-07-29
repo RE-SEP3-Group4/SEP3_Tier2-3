@@ -39,10 +39,10 @@ public class LogicTierConnection implements Runnable {
                     output.writeObject(databaseAccess.updateUser(msg.getInt1(), msg.getStr1(), msg.getStr2()));
                     break;
                 case "deleteUser":
-                    //Write the delete user method
+                    output.writeObject(databaseAccess.deleteUser(msg.getInt1()));
                     break;
                 case "getAllUsers":
-                    //Write the get all user method
+                    output.writeObject(databaseAccess.getAllUsers());
                     break;
                 case "getReservations":
                     output.writeObject(databaseAccess.getReservations(msg.getInt1()));
@@ -51,7 +51,7 @@ public class LogicTierConnection implements Runnable {
                     output.writeObject(databaseAccess.createReservation(msg.getInt1(), msg.getInt2()));
                     break;
                 case "deleteReservation":
-                    //Write the delete reservation method
+                    output.writeObject(databaseAccess.deleteReservation(msg.getReservation()));
                     break;
                 case "getPayments":
                     output.writeObject(databaseAccess.getPayments(msg.getInt1()));
@@ -60,7 +60,7 @@ public class LogicTierConnection implements Runnable {
                     output.writeObject(databaseAccess.createPayment(msg.getInt1(), msg.getInt2(), msg.getInt3()));
                     break;
                 case "deletePayment":
-                    //Write the delete payment method
+                    output.writeObject(databaseAccess.deletePayment(msg.getPayment()));
                     break;
                 default:
                     System.out.println("Wrong command imputed!");
