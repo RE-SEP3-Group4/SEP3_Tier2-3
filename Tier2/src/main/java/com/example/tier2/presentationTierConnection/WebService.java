@@ -38,7 +38,7 @@ public class WebService {
     @GetMapping("/reservation")
     public List<Reservation> getReservations(@RequestParam int userID) { return reservationDataTierConnection.getReservations(userID); }
     @PostMapping("/reservation")
-    public boolean createReservation(@RequestBody Reservation reservation) { return reservationDataTierConnection.createReservation(reservation.getUserID(), reservation.getDate()); }
+    public boolean createReservation(@RequestBody Reservation reservation) { return reservationDataTierConnection.createReservation(reservation.getUserID(), reservation.getDate(), reservation.getHour()); }
     @PutMapping("/reservation")
     public boolean deleteReservation(@RequestBody Reservation reservation) { return reservationDataTierConnection.deleteReservation(reservation); }
 
@@ -46,7 +46,7 @@ public class WebService {
     @GetMapping("/payment")
     public List<Payment> getPayments(@RequestParam int userID) { return paymentDataTierConnection.getPayments(userID); }
     @PostMapping("/payment")
-    public boolean createPayment(@RequestBody Payment payment) { return paymentDataTierConnection.createPayment(payment.getUserID(), payment.getDate(), payment.getPeriod()); }
+    public boolean createPayment(@RequestBody Payment payment) { return paymentDataTierConnection.createPayment(payment.getUserID(), payment.getStartDate(), payment.getEndDate()); }
     @PutMapping("/payment")
     public boolean deletePayment(@RequestBody Payment payment) { return paymentDataTierConnection.deletePayment(payment); }
 }

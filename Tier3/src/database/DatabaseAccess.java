@@ -105,8 +105,9 @@ public class DatabaseAccess implements DatabaseAccessInterface {
             disconnect();
             while (resultSet.next()) {
                 int uID = resultSet.getInt(1);
-                int date = resultSet.getInt(2);
-                reservations.add(new Reservation(uID, date));
+                String date = resultSet.getString(2);
+                String hour = resultSet.getString(3);
+                reservations.add(new Reservation(uID, date, hour));
             }
             return reservations;
         } catch (SQLException e) {
@@ -116,12 +117,13 @@ public class DatabaseAccess implements DatabaseAccessInterface {
     }
 
     @Override
-    public List<Reservation> createReservation(int userID, int date) throws SQLException {
+    public List<Reservation> createReservation(int userID, String date, String hour) throws SQLException {
         try {
             connect();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO reservations(userid, date) VALUES(?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO reservations(userid, date, hour) VALUES(?,?,?)");
             statement.setInt(1, userID);
-            statement.setInt(2, date);
+            statement.setString(2, date);
+            statement.setString(3, hour);
             statement.execute();
             disconnect();
             return getReservations(userID);
@@ -147,9 +149,9 @@ public class DatabaseAccess implements DatabaseAccessInterface {
             disconnect();
             while (resultSet.next()) {
                 int uID = resultSet.getInt(1);
-                int date = resultSet.getInt(2);
-                int period = resultSet.getInt(3);
-                payments.add(new Payment(uID, date, period));
+                String startDate = resultSet.getString(2);
+                String endDate = resultSet.getString(3);
+                payments.add(new Payment(uID, startDate, endDate));
             }
             return payments;
         } catch (SQLException e) {
@@ -159,12 +161,13 @@ public class DatabaseAccess implements DatabaseAccessInterface {
     }
 
     @Override
-    public List<Payment> createPayment(int userID, int date, int period) throws SQLException {
+    public List<Payment> createPayment(int userID, String startDate, String endDate) throws SQLException {
         try {
             connect();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO payments(userid, date, period) VALUES(?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO payments(userid, startDate, endDate) VALUES(?,?,?)");
             statement.setInt(1, userID);
-            statement.setInt(2, date);
+            statement.setString(2, startDate);
+            statement.setString(3, endDate);
             statement.execute();
             disconnect();
             return getPayments(userID);

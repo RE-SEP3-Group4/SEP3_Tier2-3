@@ -19,10 +19,10 @@ public interface DatabaseAccessInterface {
     List<User> getAllUsers() throws SQLException;
 
     List<Reservation> getReservations(int userID) throws SQLException;
-    List<Reservation> createReservation(int userID, int date) throws SQLException;
+    List<Reservation> createReservation(int userID, String date, String hour) throws SQLException;
     boolean deleteReservation(Reservation reservation) throws SQLException;
 
     List<Payment> getPayments(int userID) throws SQLException;
-    List<Payment> createPayment(int userID, int date, int period) throws SQLException;
+    List<Payment> createPayment(int userID, String startDate, String endDate) throws SQLException;
     boolean deletePayment(Payment payment) throws SQLException;
 }

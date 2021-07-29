@@ -1,35 +1,36 @@
 package domain;
 
 public class Payment {
-    int userID, date, period;
+    int userID;
+    String startDate, endDate;
 
-    public Payment(int userID, int date, int period) {
+    public Payment(int userID, String startDate, String endDate) {
         this.userID = userID;
-        this.date = date;
-        this.period = period;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public int getUserID() {
         return userID;
     }
 
-    public int getDate() {
-        return date;
-    }
-
-    public int getPeriod() {
-        return period;
-    }
-
     public void setUserID(int userID) {
         this.userID = userID;
     }
 
-    public void setDate(int date) {
-        this.date = date;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setPeriod(int period) {
-        this.period = period;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

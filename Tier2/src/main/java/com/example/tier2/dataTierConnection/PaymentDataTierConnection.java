@@ -50,11 +50,11 @@ public class PaymentDataTierConnection {
         return null;
     }
 
-    public boolean createPayment(int userID, int date, int period) {
+    public boolean createPayment(int userID, String startDate, String endDate) {
         SocketMessage socketMessage = new SocketMessage("createPayment");
         socketMessage.setInt1(userID);
-        socketMessage.setInt2(date);
-        socketMessage.setInt3(period);
+        socketMessage.setStr1(startDate);
+        socketMessage.setStr2(endDate);
         createSocket();
         try {
             output.writeObject(socketMessage);

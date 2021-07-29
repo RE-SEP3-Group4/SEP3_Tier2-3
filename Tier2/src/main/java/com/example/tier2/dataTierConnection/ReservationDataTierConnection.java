@@ -49,10 +49,11 @@ public class ReservationDataTierConnection {
         return null;
     }
 
-    public boolean createReservation(int userID, int date) {
+    public boolean createReservation(int userID, String date, String hour) {
         SocketMessage socketMessage = new SocketMessage("createReservation");
         socketMessage.setInt1(userID);
-        socketMessage.setInt2(date);
+        socketMessage.setStr1(date);
+        socketMessage.setStr2(hour);
         createSocket();
         try {
             output.writeObject(socketMessage);

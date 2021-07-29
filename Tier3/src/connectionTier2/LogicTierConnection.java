@@ -48,7 +48,7 @@ public class LogicTierConnection implements Runnable {
                     output.writeObject(databaseAccess.getReservations(msg.getInt1()));
                     break;
                 case "createReservation":
-                    output.writeObject(databaseAccess.createReservation(msg.getInt1(), msg.getInt2()));
+                    output.writeObject(databaseAccess.createReservation(msg.getInt1(), msg.getStr1(), msg.getStr2()));
                     break;
                 case "deleteReservation":
                     output.writeObject(databaseAccess.deleteReservation(msg.getReservation()));
@@ -57,7 +57,7 @@ public class LogicTierConnection implements Runnable {
                     output.writeObject(databaseAccess.getPayments(msg.getInt1()));
                     break;
                 case "createPayment":
-                    output.writeObject(databaseAccess.createPayment(msg.getInt1(), msg.getInt2(), msg.getInt3()));
+                    output.writeObject(databaseAccess.createPayment(msg.getInt1(), msg.getStr1(), msg.getStr2()));
                     break;
                 case "deletePayment":
                     output.writeObject(databaseAccess.deletePayment(msg.getPayment()));
