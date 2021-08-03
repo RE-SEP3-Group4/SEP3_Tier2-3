@@ -1,8 +1,8 @@
 package domain;
 
 public class Reservation {
-    int userID;
-    String date, hour;
+    private int userID;
+    private String date, hour;
 
     public Reservation(int userID, String date, String hour) {
         this.userID = userID;

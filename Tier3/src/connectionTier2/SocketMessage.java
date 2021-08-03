@@ -1,4 +1,8 @@
-package domain;
+package connectionTier2;
+
+import domain.Payment;
+import domain.Reservation;
+import domain.User;
 
 import java.io.Serializable;
 

@@ -1,8 +1,6 @@
 package connectionTier2;
 
-import database.DatabaseAccess;
-import database.DatabaseAccessInterface;
-import domain.SocketMessage;
+import database.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,16 +10,20 @@ import java.net.Socket;
 public class LogicTierConnection implements Runnable {
     private ObjectInputStream input;
     private ObjectOutputStream output;
-    private DatabaseAccessInterface databaseAccess;
+    private UserRepository userRepository;
+    private ReservationRepository reservationRepository;
+    private PaymentRepository paymentRepository;
+    private Socket client;
 
     public LogicTierConnection() {
-        databaseAccess = new DatabaseAccess();
+        userRepository = new JDBCUserRepositoryImpl();
+        reservationRepository = new JDBCReservationRepositoryImpl();
+        paymentRepository = new JDBCPaymentRepositoryImpl();
     }
 
     public void setSocket(Socket socket) throws IOException {
         output = new ObjectOutputStream(socket.getOutputStream());
         input = new ObjectInputStream(socket.getInputStream());
-        databaseAccess = new DatabaseAccess();
     }
 
     @Override
@@ -30,37 +32,37 @@ public class LogicTierConnection implements Runnable {
             SocketMessage msg = (SocketMessage) input.readObject();
             switch (msg.getCmd()) {
                 case "login":
-                    output.writeObject(databaseAccess.login(msg.getStr1(), msg.getStr2()));
+                    output.writeObject(userRepository.findUserByUsernameAndPassword(msg.getStr1(), msg.getStr2()));
                     break;
                 case "register":
-                    output.writeObject(databaseAccess.register(msg.getStr1(), msg.getStr2()));
+                    output.writeObject(userRepository.createUser(msg.getStr1(), msg.getStr2()));
                     break;
                 case "updateUser":
-                    output.writeObject(databaseAccess.updateUser(msg.getInt1(), msg.getStr1(), msg.getStr2()));
+                    output.writeObject(userRepository.updateUser(msg.getInt1(), msg.getStr1(), msg.getStr2()));
                     break;
                 case "deleteUser":
-                    output.writeObject(databaseAccess.deleteUser(msg.getInt1()));
+                    output.writeObject(userRepository.deleteUser(msg.getInt1()));
                     break;
                 case "getAllUsers":
-                    output.writeObject(databaseAccess.getAllUsers());
+                    output.writeObject(userRepository.getAllUsers());
                     break;
                 case "getReservations":
-                    output.writeObject(databaseAccess.getReservations(msg.getInt1()));
+                    output.writeObject(reservationRepository.getReservations(msg.getInt1()));
                     break;
                 case "createReservation":
-                    output.writeObject(databaseAccess.createReservation(msg.getInt1(), msg.getStr1(), msg.getStr2()));
+                    output.writeObject(reservationRepository.createReservation(msg.getInt1(), msg.getStr1(), msg.getStr2()));
                     break;
                 case "deleteReservation":
-                    output.writeObject(databaseAccess.deleteReservation(msg.getReservation()));
+                    output.writeObject(reservationRepository.deleteReservation(msg.getReservation()));
                     break;
                 case "getPayments":
-                    output.writeObject(databaseAccess.getPayments(msg.getInt1()));
+                    output.writeObject(paymentRepository.getPayments(msg.getInt1()));
                     break;
                 case "createPayment":
-                    output.writeObject(databaseAccess.createPayment(msg.getInt1(), msg.getStr1(), msg.getStr2()));
+                    output.writeObject(paymentRepository.createPayment(msg.getInt1(), msg.getStr1(), msg.getStr2()));
                     break;
                 case "deletePayment":
-                    output.writeObject(databaseAccess.deletePayment(msg.getPayment()));
+                    output.writeObject(paymentRepository.deletePayment(msg.getPayment()));
                     break;
                 default:
                     System.out.println("Wrong command imputed!");

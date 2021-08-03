@@ -1,8 +1,8 @@
 package domain;
 
 public class Payment {
-    int userID;
-    String startDate, endDate;
+    private int userID;
+    private String startDate, endDate;
 
     public Payment(int userID, String startDate, String endDate) {
         this.userID = userID;
