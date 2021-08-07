@@ -1,4 +1,4 @@
-package connectionTier2;
+package domain;
 
 import domain.Payment;
 import domain.Reservation;

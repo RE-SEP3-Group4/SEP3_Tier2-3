@@ -1,6 +1,7 @@
 package connectionTier2;
 
 import database.*;
+import domain.SocketMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

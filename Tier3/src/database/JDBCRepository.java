@@ -7,13 +7,13 @@ import java.sql.SQLException;
 public abstract class JDBCRepository {
     private final String url = "jdbc:postgresql://localhost:5432/postgres";
     private final String username = "postgres";
-    private final String password = "123456";
+    private final String password = "98765";
 
     public Connection connect() throws SQLException {
         try {
             return DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
-            throw new RuntimeException(e); // irrecoverable error
+            throw new RuntimeException(e);
         }
     }
 }
