@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS reservations
     date   VARCHAR(8),
     hour   VARCHAR(4),
     FOREIGN KEY (userID) REFERENCES users (id),
-    PRIMARY KEY (userID, date)
+    PRIMARY KEY (userID, date, hour)
 );
 
 INSERT INTO users(username, password, securityLevel) VALUES ('admin', 'admin', 2);

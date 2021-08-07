@@ -1,6 +1,8 @@
 package domain;
 
-public class Reservation {
+import java.io.Serializable;
+
+public class Reservation implements Serializable {
     int userID;
     String date, hour;
 

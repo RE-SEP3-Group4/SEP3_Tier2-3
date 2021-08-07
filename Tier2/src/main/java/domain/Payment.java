@@ -1,6 +1,8 @@
 package domain;
 
-public class Payment {
+import java.io.Serializable;
+
+public class Payment implements Serializable {
     int userID;
     String startDate, endDate;
 
