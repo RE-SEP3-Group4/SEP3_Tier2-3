@@ -2,7 +2,6 @@ package database;
 
 import domain.Payment;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface PaymentRepository {

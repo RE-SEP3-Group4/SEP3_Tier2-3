@@ -1,9 +1,5 @@
 package domain;
 
-import domain.Payment;
-import domain.Reservation;
-import domain.User;
-
 import java.io.Serializable;
 
 public class SocketMessage implements Serializable {

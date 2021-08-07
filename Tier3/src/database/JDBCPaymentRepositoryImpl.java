@@ -1,8 +1,6 @@
 package database;
 
 import domain.Payment;
-import domain.Reservation;
-import domain.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
