@@ -2,6 +2,7 @@ package com.example.tier2.dataTierConnection;
 
 import domain.SocketMessage;
 import domain.User;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
 
+@Component
 public class UserDataTierConnection {
     private final String HOST = "localhost";
     private final int PORT = 3000;
@@ -30,7 +32,7 @@ public class UserDataTierConnection {
         }
     }
 
-    public User login(String username, String password) {
+    public User findUserByUsernameAndPassword(String username, String password) {
         SocketMessage socketMessage = new SocketMessage("login");
         socketMessage.setStr1(username);
         socketMessage.setStr2(password);
@@ -51,7 +53,7 @@ public class UserDataTierConnection {
         return null;
     }
 
-    public boolean register(String username, String password) {
+    public boolean createUser(String username, String password) {
         SocketMessage socketMessage = new SocketMessage("register");
         socketMessage.setStr1(username);
         socketMessage.setStr2(password);

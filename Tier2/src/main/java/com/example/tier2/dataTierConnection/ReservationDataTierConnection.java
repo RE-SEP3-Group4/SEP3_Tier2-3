@@ -2,6 +2,7 @@ package com.example.tier2.dataTierConnection;
 
 import domain.Reservation;
 import domain.SocketMessage;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -9,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
 
+@Component
 public class ReservationDataTierConnection {
     private final String HOST = "localhost";
     private final int PORT = 3000;
