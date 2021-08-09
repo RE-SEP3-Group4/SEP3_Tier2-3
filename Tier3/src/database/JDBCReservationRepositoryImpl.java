@@ -31,7 +31,6 @@ public class JDBCReservationRepositoryImpl extends JDBCRepository implements Res
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM reservations WHERE userid = ?");
             statement.setInt(1, userID);
             ResultSet resultSet = statement.executeQuery();
-
             while (resultSet.next()) {
                 reservations.add(new Reservation(resultSet.getInt("userID"),
                         resultSet.getString("date"),
@@ -45,6 +44,15 @@ public class JDBCReservationRepositoryImpl extends JDBCRepository implements Res
 
     @Override
     public boolean deleteReservation(Reservation reservation) {
-        return false;
+        try(Connection connection = connect()){
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM reservations WHERE userid = ? AND date = ? AND hour = ?");
+            statement.setInt(1, reservation.getUserID());
+            statement.setString(2, reservation.getDate());
+            statement.setString(3, reservation.getHour());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

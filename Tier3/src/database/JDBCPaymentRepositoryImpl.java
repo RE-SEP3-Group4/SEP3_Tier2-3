@@ -46,6 +46,15 @@ public class JDBCPaymentRepositoryImpl extends JDBCRepository implements Payment
 
     @Override
     public boolean deletePayment(Payment payment) {
-        return false;
+        try(Connection connection = connect()){
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM payments WHERE userid = ? AND startdate = ? AND enddate = ?");
+            statement.setInt(1, payment.getUserID());
+            statement.setString(2, payment.getStartDate());
+            statement.setString(3, payment.getEndDate());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -18,7 +18,6 @@ public class JDBCUserRepositoryImpl extends JDBCRepository implements UserReposi
             statement.setString(1, username);
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
-
             if(resultSet.next()) {
                 int personID = resultSet.getInt(1);
                 int securityLevel = resultSet.getInt(4);
@@ -38,7 +37,6 @@ public class JDBCUserRepositoryImpl extends JDBCRepository implements UserReposi
                     "SELECT * FROM users WHERE id = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
-
             if(resultSet.next()) {
                 return new User(resultSet.getInt("id"),
                         resultSet.getString("username"),
