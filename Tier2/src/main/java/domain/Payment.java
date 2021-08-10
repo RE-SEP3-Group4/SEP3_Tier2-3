@@ -3,8 +3,8 @@ package domain;
 import java.io.Serializable;
 
 public class Payment implements Serializable {
-    int userID;
-    String startDate, endDate;
+    private int userID;
+    private String startDate, endDate;
 
     public Payment(int userID, String startDate, String endDate) {
         this.userID = userID;
