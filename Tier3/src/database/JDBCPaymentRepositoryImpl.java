@@ -19,7 +19,7 @@ public class JDBCPaymentRepositoryImpl extends JDBCRepository implements Payment
             ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
-                payments.add(new Payment(resultSet.getInt("userid"),
+                payments.add(new Payment(resultSet.getInt("userID"),
                         resultSet.getString("startDate"),
                         resultSet.getString("endDate")));
             }
