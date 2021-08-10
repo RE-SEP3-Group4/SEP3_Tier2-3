@@ -57,7 +57,7 @@ public class JDBCUserRepositoryImpl extends JDBCRepository implements UserReposi
                     "INSERT INTO users(username, password, securityLevel) VALUES(?,?,?)");
             statement.setString(1, username);
             statement.setString(2, password);
-            statement.setInt(3, 2);
+            statement.setInt(3, 1);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
