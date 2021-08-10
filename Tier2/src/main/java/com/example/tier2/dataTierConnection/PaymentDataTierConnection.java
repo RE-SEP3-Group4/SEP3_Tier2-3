@@ -1,5 +1,6 @@
 package com.example.tier2.dataTierConnection;
 
+import com.google.gson.Gson;
 import domain.Payment;
 import domain.Reservation;
 import domain.SocketMessage;
@@ -11,6 +12,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
 
+import static com.example.tier2.dataTierConnection.Request.RequestOperation.CREATE;
+import static com.example.tier2.dataTierConnection.Request.RequestOperation.DELETE;
+
 @Component
 public class PaymentDataTierConnection {
     private final String HOST = "localhost";
@@ -20,7 +24,10 @@ public class PaymentDataTierConnection {
     private ObjectInputStream input = null;
     private ObjectOutputStream output = null;
 
-    public PaymentDataTierConnection() {}
+    private String addr = "payments";
+    private Gson serializer = new Gson();
+
+    public PaymentDataTierConnection() {createSocket();}
 
     private void createSocket() {
         try {
@@ -32,68 +39,30 @@ public class PaymentDataTierConnection {
         }
     }
 
-    public List<Payment> getPayments(int userID) {
-        SocketMessage socketMessage = new SocketMessage("getPayments");
-        socketMessage.setInt1(userID);
-        createSocket();
+    public Payment createPayment(int userID, String startDate, String endDate) {
         try {
-            output.writeObject(socketMessage);
-            List<Payment> payments = (List<Payment>) input.readObject();
-            socket.close();
-            return payments;
-        } catch (Exception e) {
-            System.out.println(e);
-            try {
-                socket.close();
-            } catch (IOException ee) {
-                System.out.println(ee);
-            }
-        }
-        return null;
-    }
+            Payment payload = new Payment(userID, startDate, endDate);
+            Request req = new Request(addr, CREATE, serializer.toJson(payload));
+            output.writeObject(req);
+            Response resp = (Response) input.readObject();
 
-    public boolean createPayment(int userID, String startDate, String endDate) {
-        SocketMessage socketMessage = new SocketMessage("createPayment");
-        socketMessage.setInt1(userID);
-        socketMessage.setStr1(startDate);
-        socketMessage.setStr2(endDate);
-        createSocket();
-        try {
-            output.writeObject(socketMessage);
-            List<Payment> payments = (List<Payment>) input.readObject();
-            socket.close();
-            if (payments == null) {
-                return false;
-            } else {
-                return true;
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-            try {
-                socket.close();
-            } catch (IOException ee) {
-                System.out.println(ee);
-            }
+            return serializer.fromJson(resp.getPayload(), Payment.class);
+
+        } catch(IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return false;
     }
 
     public boolean deletePayment(Payment payment) {
-        SocketMessage socketMessage = new SocketMessage("deletePayment");
-        socketMessage.setPayment(payment);
-        createSocket();
         try {
-            output.writeObject(socketMessage);
-            socket.close();
-            return true;
-        } catch (Exception e) {
-            System.out.println(e);
-            try {
-                socket.close();
-            } catch (IOException ee) {
-                System.out.println(ee);
-            }
+            Request req = new Request(addr, DELETE, serializer.toJson(payment));
+            output.writeObject(req);
+            Response resp = (Response) input.readObject();
+
+            return serializer.fromJson(resp.getPayload(), boolean.class);
+
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return false;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.tier2.dataTierConnection;
 
+import com.google.gson.Gson;
 import domain.SocketMessage;
 import domain.User;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
 
+import static com.example.tier2.dataTierConnection.Request.RequestOperation.*;
+import static com.example.tier2.dataTierConnection.Response.ResponseStatus.NOT_FOUND;
+
 @Component
 public class UserDataTierConnection {
     private final String HOST = "localhost";
@@ -20,7 +24,12 @@ public class UserDataTierConnection {
     private ObjectInputStream input = null;
     private ObjectOutputStream output = null;
 
-    public UserDataTierConnection() {}
+    private String addr = "users";
+    private Gson serializer = new Gson();
+
+    public UserDataTierConnection() {
+        createSocket();
+    }
 
     private void createSocket() {
         try {
@@ -28,99 +37,76 @@ public class UserDataTierConnection {
             input = new ObjectInputStream(socket.getInputStream());
             output = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
     public User findUserByUsernameAndPassword(String username, String password) {
-        SocketMessage socketMessage = new SocketMessage("login");
-        socketMessage.setStr1(username);
-        socketMessage.setStr2(password);
-        createSocket();
         try {
-            output.writeObject(socketMessage);
-            User user = (User) input.readObject();
-            socket.close();
-            return user;
-        } catch (Exception e) {
-            System.out.println(e);
-            try {
-                socket.close();
-            } catch (IOException ee) {
-                System.out.println(ee);
-            }
+            User payload = new User(null, username, password, null);
+            Request req = new Request(addr, GET, serializer.toJson(payload));
+            output.writeObject(req);
+            Response resp = (Response) input.readObject();
+
+            if(resp.getStatus() == NOT_FOUND)
+                throw new IllegalArgumentException("No such user");
+
+            return serializer.fromJson(resp.getPayload(), User.class);
+
+        } catch(IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
-    public boolean createUser(String username, String password) {
-        SocketMessage socketMessage = new SocketMessage("register");
-        socketMessage.setStr1(username);
-        socketMessage.setStr2(password);
-        createSocket();
+    public User createUser(String username, String password) {
         try {
-            output.writeObject(socketMessage);
-            User user = (User) input.readObject();
-            socket.close();
-            if (user == null) {
-                return false;
-            } else if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                return true;
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-            try {
-                socket.close();
-            } catch (IOException ee) {
-                System.out.println(ee);
-            }
+            User payload = new User(null, username, password, null);
+            Request req = new Request(addr, CREATE, serializer.toJson(payload));
+            output.writeObject(req);
+            Response resp = (Response) input.readObject();
+
+            if(resp.getStatus() == NOT_FOUND)
+                throw new IllegalArgumentException("No such user");
+
+            return serializer.fromJson(resp.getPayload(), User.class);
+
+        } catch(IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return false;
     }
 
-    public boolean updateUser(int id, String username, String password) {
-        SocketMessage socketMessage = new SocketMessage("updateUser");
-        socketMessage.setInt1(id);
-        socketMessage.setStr1(username);
-        socketMessage.setStr2(password);
-        createSocket();
+    public User updateUser(int id, String username, String password) {
         try {
-            output.writeObject(socketMessage);
-            User user = (User) input.readObject();
-            socket.close();
-            if (user == null) {
-                return false;
-            } else if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                return true;
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-            try {
-                socket.close();
-            } catch (IOException ee) {
-                System.out.println(ee);
-            }
+            User payload = new User(null, username, password, null);
+            Request req = new Request(addr, UPDATE, serializer.toJson(payload));
+            output.writeObject(req);
+            Response resp = (Response) input.readObject();
+
+            if(resp.getStatus() == NOT_FOUND)
+                throw new IllegalArgumentException("No such user");
+
+            return serializer.fromJson(resp.getPayload(), User.class);
+
+        } catch(IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return false;
     }
 
     public boolean deleteUser(int id) {
-        SocketMessage socketMessage = new SocketMessage("deleteUser");
-        socketMessage.setInt1(id);
-        createSocket();
         try {
-            output.writeObject(socketMessage);
-            socket.close();
+            User payload = new User(id, null, null, null);
+            Request req = new Request(addr, DELETE, serializer.toJson(payload));
+            output.writeObject(req);
+            Response resp = (Response) input.readObject();
+
+            if(resp.getStatus() == NOT_FOUND)
+                throw new IllegalArgumentException("No such user");
+
             return true;
-        } catch (Exception e) {
-            System.out.println(e);
-            try {
-                socket.close();
-            } catch (IOException ee) {
-                System.out.println(ee);
-            }
+
+        } catch(IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return false;
     }
 
     public List<User> getAllUsers() {

@@ -4,18 +4,18 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     private String username, password;
-    private int id, securityLevel;
+    private Integer id, securityLevel;
 
     public User() {}
 
-    public User(int id, String username, String password, int securityLevel) {
+    public User(Integer id, String username, String password, Integer securityLevel) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.securityLevel = securityLevel;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
