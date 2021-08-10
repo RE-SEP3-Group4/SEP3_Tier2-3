@@ -3,8 +3,9 @@ package domain;
 import java.io.Serializable;
 
 public class User implements Serializable {
+    private Integer id;
     private String username, password;
-    private int id, securityLevel;
+    private Integer securityLevel;
 
     public User() {}
 
@@ -15,7 +16,7 @@ public class User implements Serializable {
         this.securityLevel = securityLevel;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

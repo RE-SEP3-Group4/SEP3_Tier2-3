@@ -10,5 +10,5 @@ public interface UserRepository {
     User createUser(String username, String password);
     User updateUser(int id, String username, String password);
     boolean deleteUser(int id);
-    List<User> getAllUsers();
+    List<User> findAllUsers();
 }

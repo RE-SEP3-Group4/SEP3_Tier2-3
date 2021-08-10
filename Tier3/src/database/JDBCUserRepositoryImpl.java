@@ -93,7 +93,7 @@ public class JDBCUserRepositoryImpl extends JDBCRepository implements UserReposi
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> findAllUsers() {
         List<User> users = new ArrayList<>();
         try(Connection connection = connect()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users");
