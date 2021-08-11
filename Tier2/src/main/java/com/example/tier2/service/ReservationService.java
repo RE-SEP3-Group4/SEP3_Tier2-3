@@ -2,7 +2,7 @@ package com.example.tier2.service;
 
 import com.example.tier2.dataTierConnection.ReservationDataTierConnection;
 import com.example.tier2.service.dto.CreateReservationDTO;
-import domain.Reservation;
+import com.example.tier3.domain.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

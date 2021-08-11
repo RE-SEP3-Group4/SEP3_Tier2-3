@@ -1,19 +1,18 @@
 package com.example.tier2.dataTierConnection;
 
+import com.example.tier3.network.Request;
+import com.example.tier3.network.Response;
 import com.google.gson.Gson;
-import domain.Payment;
-import domain.Reservation;
-import domain.SocketMessage;
+import com.example.tier3.domain.Payment;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.List;
 
-import static com.example.tier2.dataTierConnection.Request.RequestOperation.CREATE;
-import static com.example.tier2.dataTierConnection.Request.RequestOperation.DELETE;
+import static com.example.tier3.network.Request.RequestOperation.CREATE;
+import static com.example.tier3.network.Request.RequestOperation.DELETE;
 
 @Component
 public class PaymentDataTierConnection {

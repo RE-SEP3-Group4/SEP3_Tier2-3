@@ -1,8 +1,8 @@
 import com.google.gson.Gson;
-import database.JDBCPaymentRepositoryImpl;
-import database.JDBCReservationRepositoryImpl;
-import database.JDBCUserRepositoryImpl;
-import network.*;
+import com.example.tier3.database.JDBCPaymentRepositoryImpl;
+import com.example.tier3.database.JDBCReservationRepositoryImpl;
+import com.example.tier3.database.JDBCUserRepositoryImpl;
+import com.example.tier3.network.*;
 
 import java.io.IOException;
 import java.net.ServerSocket;

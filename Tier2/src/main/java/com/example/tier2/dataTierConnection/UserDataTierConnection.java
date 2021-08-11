@@ -1,10 +1,11 @@
 package com.example.tier2.dataTierConnection;
 
+import com.example.tier3.network.Request;
+import com.example.tier3.network.Response;
 import com.google.gson.Gson;
-import domain.SocketMessage;
-import domain.User;
+import com.example.tier3.domain.SocketMessage;
+import com.example.tier3.domain.User;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,8 +13,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
 
-import static com.example.tier2.dataTierConnection.Request.RequestOperation.*;
-import static com.example.tier2.dataTierConnection.Response.ResponseStatus.NOT_FOUND;
+import static com.example.tier3.network.Request.RequestOperation.*;
+import static com.example.tier3.network.Response.ResponseStatus.ERROR;
+import static com.example.tier3.network.Response.ResponseStatus.NOT_FOUND;
 
 @Component
 public class UserDataTierConnection {
@@ -67,6 +69,8 @@ public class UserDataTierConnection {
 
             if(resp.getStatus() == NOT_FOUND)
                 throw new IllegalArgumentException("No such user");
+            if(resp.getStatus() == ERROR)
+                throw new RuntimeException(resp.getPayload());
 
             return serializer.fromJson(resp.getPayload(), User.class);
 
@@ -77,13 +81,17 @@ public class UserDataTierConnection {
 
     public User updateUser(int id, String username, String password) {
         try {
-            User payload = new User(null, username, password, null);
+            User payload = new User(id, username, password, null);
             Request req = new Request(addr, UPDATE, serializer.toJson(payload));
             output.writeObject(req);
             Response resp = (Response) input.readObject();
 
             if(resp.getStatus() == NOT_FOUND)
                 throw new IllegalArgumentException("No such user");
+
+            if(resp.getStatus() == ERROR) {
+                throw new RuntimeException(resp.getPayload());
+            }
 
             return serializer.fromJson(resp.getPayload(), User.class);
 
@@ -111,7 +119,6 @@ public class UserDataTierConnection {
 
     public List<User> getAllUsers() {
         SocketMessage socketMessage = new SocketMessage("getAllUsers");
-        createSocket();
         try {
             output.writeObject(socketMessage);
             List<User> users = (List<User>) input.readObject();

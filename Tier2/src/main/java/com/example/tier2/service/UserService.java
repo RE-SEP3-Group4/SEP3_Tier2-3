@@ -3,11 +3,9 @@ package com.example.tier2.service;
 import com.example.tier2.dataTierConnection.UserDataTierConnection;
 import com.example.tier2.service.dto.RegisterUserDTO;
 import com.example.tier2.service.dto.UpdateUserDTO;
-import domain.User;
+import com.example.tier3.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserService {

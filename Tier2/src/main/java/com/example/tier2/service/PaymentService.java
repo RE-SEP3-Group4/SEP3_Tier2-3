@@ -2,8 +2,7 @@ package com.example.tier2.service;
 
 import com.example.tier2.dataTierConnection.PaymentDataTierConnection;
 import com.example.tier2.service.dto.CreatePaymentDTO;
-import domain.Payment;
-import domain.Reservation;
+import com.example.tier3.domain.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

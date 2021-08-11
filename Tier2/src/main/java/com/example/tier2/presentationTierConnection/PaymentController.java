@@ -1,11 +1,9 @@
 package com.example.tier2.presentationTierConnection;
 
 import com.example.tier2.dataTierConnection.PaymentDataTierConnection;
-import domain.Payment;
+import com.example.tier3.domain.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class PaymentController {

@@ -1,19 +1,17 @@
 package com.example.tier2.dataTierConnection;
 
+import com.example.tier3.network.Request;
+import com.example.tier3.network.Response;
 import com.google.gson.Gson;
-import domain.Reservation;
-import domain.SocketMessage;
-import domain.User;
+import com.example.tier3.domain.Reservation;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.List;
 
-import static com.example.tier2.dataTierConnection.Request.RequestOperation.*;
-import static com.example.tier2.dataTierConnection.Response.ResponseStatus.NOT_FOUND;
+import static com.example.tier3.network.Request.RequestOperation.*;
 
 @Component
 public class ReservationDataTierConnection {
