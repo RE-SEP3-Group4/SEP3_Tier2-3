@@ -82,9 +82,15 @@ public class JDBCUserRepositoryImpl extends JDBCRepository implements UserReposi
     @Override
     public boolean deleteUser(int id) {
         try(Connection connection = connect()){
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM users WHERE id = ?");
-            statement.setInt(1, id);
-            return statement.executeUpdate() == 1;
+            PreparedStatement statement1 = connection.prepareStatement("DELETE FROM payments WHERE userid = ?");
+            statement1.setInt(1, id);
+            statement1.executeUpdate();
+            PreparedStatement statement2 = connection.prepareStatement("DELETE FROM reservations WHERE userid = ?");
+            statement2.setInt(1, id);
+            statement2.executeUpdate();
+            PreparedStatement statement3 = connection.prepareStatement("DELETE FROM users WHERE id = ?");
+            statement3.setInt(1, id);
+            return statement3.executeUpdate() == 1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
